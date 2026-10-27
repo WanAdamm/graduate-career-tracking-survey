@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#page-title">Skip to content</a>
 
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="wordmark" href="index.html" aria-label="Graduate Career Tracking Survey — summary">
+      <a class="wordmark" href="index.html" aria-label="Graduate Career Tracking Survey (GCTS) — summary">
         <span class="wordmark-full">Graduate Career Tracking Survey</span>
         <span class="wordmark-short">GCTS</span>
       </a>
@@ -28,10 +28,10 @@
     </div>
   </header>
 
-  <main class="canvas" id="main" tabindex="-1">
+  <main class="canvas" id="main">
     <div class="page-head">
       <div>
-        <h1>Detailed findings</h1>
+        <h1 id="page-title" tabindex="-1">Detailed findings</h1>
         <p class="lead">The full ranking, field explorer, cohort and education tables, and the cleaning rules behind the 2,112 paired responses.</p>
         <p class="meta">10 ranked fields <span aria-hidden="true">·</span> n = 2,112 <span aria-hidden="true">·</span> October 2026</p>
       </div>
@@ -80,7 +80,7 @@
         </div>
         <div class="explorer-body">
           <div class="explorer-list" id="explorer-list" role="group" aria-label="Choose a field"></div>
-          <div class="explorer-detail" id="explorer-detail" aria-live="polite">
+          <div class="explorer-detail" id="explorer-detail">
             <div class="explorer-top">
               <div>
                 <h3>ICT</h3>
@@ -110,6 +110,7 @@
               <div><dt>~2018 current</dt><dd>RM 3,445</dd></div>
             </dl>
           </div>
+          <p class="visually-hidden" id="explorer-status" role="status"></p>
         </div>
       </div>
     </section>
@@ -193,7 +194,7 @@
           </ul>
         </div>
 
-        <aside class="audit" aria-labelledby="audit-title">
+        <div class="audit">
           <h3 id="audit-title">Salary inversions removed</h3>
           <p>180 of 2,296 paired records (7.8%) reported a current salary below the first.</p>
           <table class="audit-table">
@@ -206,7 +207,7 @@
               <tr class="total"><td>Total</td><td>180</td></tr>
             </tfoot>
           </table>
-        </aside>
+        </div>
       </div>
     </section>
 
@@ -303,7 +304,7 @@
 
       rankingBody.innerHTML = rows.map(function (field) {
         return "<tr>" +
-          "<td class=\"field-cell\">" + field.name + "</td>" +
+          "<th scope=\"row\" class=\"field-cell\">" + field.name + "</th>" +
           "<td class=\"num\">" + fmt.int(field.n) + "</td>" +
           "<td class=\"num\">" + fmt.money(field.first) + "</td>" +
           "<td class=\"num\">" + fmt.money(field.current) + "</td>" +
@@ -341,12 +342,32 @@
       });
     });
 
+    document.querySelectorAll(".table-wrap").forEach(function (wrap) {
+      wrap.addEventListener("focusin", function (event) {
+        var button = event.target.closest(".sort-btn");
+        if (!button) { return; }
+        window.requestAnimationFrame(function () {
+          var wrapRect = wrap.getBoundingClientRect();
+          var buttonRect = button.getBoundingClientRect();
+          var sticky = wrap.querySelector("thead th:first-child");
+          var leftEdge = sticky ? sticky.getBoundingClientRect().right : wrapRect.left;
+          var margin = 8;
+          if (buttonRect.left < leftEdge + margin) {
+            wrap.scrollLeft += buttonRect.left - leftEdge - margin;
+          } else if (buttonRect.right > wrapRect.right - margin) {
+            wrap.scrollLeft += buttonRect.right - wrapRect.right + margin;
+          }
+        });
+      });
+    });
+
     renderRanking();
 
     /* Explorer */
 
     var explorerList = document.querySelector("#explorer-list");
     var explorerDetail = document.querySelector("#explorer-detail");
+    var explorerStatus = document.querySelector("#explorer-status");
     var selectedIndex = 0;
 
     function drawMiniTrack(field) {
@@ -404,7 +425,7 @@
         "</dl>";
     }
 
-    function selectField(index) {
+    function selectField(index, announce) {
       selectedIndex = index;
       if (explorerDetail) {
         explorerDetail.innerHTML = explorerMarkup(G.fields[index]);
@@ -414,6 +435,10 @@
         explorerList.querySelectorAll(".explorer-btn").forEach(function (button) {
           button.setAttribute("aria-pressed", String(Number(button.getAttribute("data-index")) === index));
         });
+      }
+      if (announce && explorerStatus) {
+        var field = G.fields[index];
+        explorerStatus.textContent = field.name + " selected. Rank " + field.rank + " of 10; mean gain " + fmt.signedMoney(field.gain) + ".";
       }
     }
 
@@ -429,7 +454,7 @@
       explorerList.addEventListener("click", function (event) {
         var button = event.target.closest(".explorer-btn");
         if (!button) { return; }
-        selectField(Number(button.getAttribute("data-index")));
+        selectField(Number(button.getAttribute("data-index")), true);
       });
     }
 
@@ -442,7 +467,7 @@
       var cohortRows = G.fields.slice().sort(function (a, b) { return b.premium - a.premium; });
       cohortBody.innerHTML = cohortRows.map(function (field) {
         return "<tr>" +
-          "<td class=\"field-cell\">" + field.name + "</td>" +
+          "<th scope=\"row\" class=\"field-cell\">" + field.name + "</th>" +
           "<td class=\"num\">" + fmt.money(field.cohort2010) + "</td>" +
           "<td class=\"num\">" + fmt.money(field.cohort2018) + "</td>" +
           "<td class=\"num\">" + fmt.signedMoney(field.cohortGain2010) + "</td>" +
@@ -462,7 +487,7 @@
           : "<span class=\"strong\">" + fmt.pct(row.premiumPct) + "</span>" +
             "<span class=\"cell-sub\">" + fmt.signedMoney(row.premiumRm) + "</span>";
         return "<tr>" +
-          "<td class=\"field-cell\">" + row.name + "</td>" +
+          "<th scope=\"row\" class=\"field-cell\">" + row.name + "</th>" +
           "<td class=\"num\">" + fmt.int(row.n) + "</td>" +
           "<td class=\"num\">" + fmt.money(row.mean) + "</td>" +
           "<td class=\"num\">" + fmt.money(row.median) + "</td>" +
@@ -477,7 +502,7 @@
     if (auditBody) {
       auditBody.innerHTML = G.exclusions.map(function (row) {
         var name = row.field === "General" ? "General Programmes" : row.field;
-        return "<tr><td>" + name + "</td><td>" + fmt.int(row.n) + "</td></tr>";
+        return "<tr><th scope=\"row\">" + name + "</th><td>" + fmt.int(row.n) + "</td></tr>";
       }).join("");
     }
 

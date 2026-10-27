@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#page-title">Skip to content</a>
 
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="wordmark" href="index.html" aria-label="Graduate Career Tracking Survey — summary">
+      <a class="wordmark" href="index.html" aria-label="Graduate Career Tracking Survey (GCTS) — summary">
         <span class="wordmark-full">Graduate Career Tracking Survey</span>
         <span class="wordmark-short">GCTS</span>
       </a>
@@ -28,10 +28,10 @@
     </div>
   </header>
 
-  <main class="canvas" id="main" tabindex="-1">
+  <main class="canvas" id="main">
     <div class="page-head">
       <div>
-        <h1>Wage progression by field of study</h1>
+        <h1 id="page-title" tabindex="-1">Wage progression by field of study</h1>
         <p class="lead">Pay rises in every ranked field. ICT adds the most, Services the least — RM&nbsp;1,452 apart.</p>
         <p class="meta">Graduate Career Tracking Survey <span aria-hidden="true">·</span> October 2026 <span aria-hidden="true">·</span> cleaned paired sample, n = 2,112</p>
       </div>
@@ -42,11 +42,12 @@
       <div class="panel-head">
         <div>
           <h2 id="gain-title">Mean pay gain, first job to current job</h2>
-          <p>Ten ranked fields in the cleaned paired sample. Bars are ringgit; the grey figure is the mean growth rate.</p>
+          <p>Ten ranked fields in the cleaned paired sample. Bars are ringgit; the smaller figure under each amount is the mean growth rate.</p>
         </div>
         <span class="unit">Mean, RM</span>
       </div>
       <div class="chart" data-chart="gain" role="img" aria-label="Bar chart of mean pay gain by field of study."></div>
+      <div class="visually-hidden" data-chart-table="gain"></div>
       <p class="note">Sorted by mean ringgit gain. Growth is the mean of individual percentage changes, so the percentage order differs slightly from the ringgit order.</p>
     </section>
 
@@ -63,6 +64,7 @@
           </div>
         </div>
         <div class="chart" data-chart="stem" role="img" aria-label="Grouped column chart of first and current salaries for STEM and Non-STEM graduates."></div>
+        <div class="visually-hidden" data-chart-table="stem"></div>
         <p class="mini-note">STEM starts RM 164 ahead and ends RM 654 ahead. Its absolute gain is 27.1% larger than Non-STEM's.</p>
       </section>
 
@@ -75,6 +77,7 @@
           <span class="unit">Mean, RM</span>
         </div>
         <div class="chart" data-chart="education" role="img" aria-label="Bar chart of mean current salary by highest qualification."></div>
+        <div class="visually-hidden" data-chart-table="education"></div>
         <p class="mini-note">Bachelor's holders average 36.5% above diploma; master's 32.9% above bachelor's. PhD averages 13.2% below master's.</p>
       </section>
     </div>
@@ -91,6 +94,7 @@
         </div>
       </div>
       <div class="chart" data-chart="cohort" role="img" aria-label="Dumbbell chart comparing current salaries for the 2010 and 2018 cohorts by field."></div>
+      <div class="visually-hidden" data-chart-table="cohort"></div>
       <p class="note">Premium is the ~2010 mean current salary minus the ~2018 mean, computed before rounding; it can differ from the displayed difference by RM 1. It mixes experience, age and period effects; it is not a causal return to experience.</p>
     </section>
 
@@ -190,6 +194,73 @@
       return Math.max(280, Math.floor(host.clientWidth || 0) || 800);
     }
 
+    function tickText(value) {
+      if (value === 0) { return "0"; }
+      if (value % 1000 === 0) { return (value / 1000) + "k"; }
+      return (value / 1000).toFixed(1) + "k";
+    }
+
+    function dataTable(caption, head, rows) {
+      return "<table><caption>" + caption + "</caption><thead><tr>" +
+        head.map(function (cell) {
+          return "<th scope=\"col\">" + cell + "</th>";
+        }).join("") +
+        "</tr></thead><tbody>" +
+        rows.map(function (row) {
+          return "<tr>" + row.map(function (cell, index) {
+            return index === 0
+              ? "<th scope=\"row\">" + cell + "</th>"
+              : "<td>" + cell + "</td>";
+          }).join("") + "</tr>";
+        }).join("") +
+        "</tbody></table>";
+    }
+
+    function fillDataTable(name, html) {
+      var host = document.querySelector('[data-chart-table="' + name + '"]');
+      if (host) { host.innerHTML = html; }
+    }
+
+    function renderDataTables() {
+      fillDataTable("gain", dataTable(
+        "Data table: mean pay gain by field of study. Cleaned paired sample, n = " + fmt.int(G.meta.sample) + "; sorted by mean gain.",
+        ["Field", "n", "First job", "Current job", "Mean gain", "Mean growth", "Median gain"],
+        G.fields.map(function (field) {
+          return [field.name, fmt.int(field.n), fmt.money(field.first), fmt.money(field.current),
+            fmt.signedMoney(field.gain), fmt.pct(field.growth), fmt.signedMoney(field.median)];
+        })
+      ));
+
+      fillDataTable("stem", dataTable(
+        "Data table: first and current salary for STEM and Non-STEM graduates. Cleaned paired sample, n = " + fmt.int(G.meta.sample) + ".",
+        ["Group", "n", "First job", "Current job", "Mean gain", "Mean growth"],
+        G.stem.map(function (row) {
+          return [row.name, fmt.int(row.n), fmt.money(row.first), fmt.money(row.current),
+            fmt.signedMoney(row.gain), fmt.pct(row.growth)];
+        })
+      ));
+
+      fillDataTable("education", dataTable(
+        "Data table: mean and median current salary by highest qualification. All valid responses, n = " + fmt.int(G.meta.crossCurrent) + ".",
+        ["Qualification", "n", "Mean current salary", "Median current salary", "Premium over prior tier"],
+        G.education.map(function (row) {
+          var premium = row.premiumPct == null
+            ? "Baseline"
+            : fmt.pct(row.premiumPct) + " (" + fmt.signedMoney(row.premiumRm) + ")";
+          return [row.name, fmt.int(row.n), fmt.money(row.mean), fmt.money(row.median), premium];
+        })
+      ));
+
+      fillDataTable("cohort", dataTable(
+        "Data table: current salary and gain by cohort and field, with the ~2010 cohort premium. Sorted by premium.",
+        ["Field", "~2010 current", "~2018 current", "~2010 gain", "~2018 gain", "Premium"],
+        G.fields.slice().sort(function (a, b) { return b.premium - a.premium; }).map(function (field) {
+          return [field.name, fmt.money(field.cohort2010), fmt.money(field.cohort2018),
+            fmt.signedMoney(field.cohortGain2010), fmt.signedMoney(field.cohortGain2018), fmt.signedMoney(field.premium)];
+        })
+      ));
+    }
+
     var hosts = {
       gain: document.querySelector('[data-chart="gain"]'),
       stem: document.querySelector('[data-chart="stem"]'),
@@ -215,11 +286,12 @@
       var svg = makeSvg(host, W, H);
 
       var ticks = compact ? [0, 1500, 3000] : [0, 1000, 2000, 3000];
+      if (W < 300) { ticks = [0, 3000]; }
 
       ticks.forEach(function (tick, index) {
         var x = plotX + (tick / max) * plotW;
         line(svg, x, 18, x, H - 4, index === 0 ? "axis-line" : "grid-line");
-        text(svg, x, 12, fmt.int(tick), "axis-label",
+        text(svg, x, 12, compact ? tickText(tick) : fmt.int(tick), "axis-label",
           index === 0 ? "start" : index === ticks.length - 1 ? "end" : "middle");
       });
 
@@ -251,7 +323,7 @@
         "Bar chart of mean pay gain by field of study. " + topField.name +
         " leads with " + fmt.signedMoney(topField.gain) + " (" + fmt.pct(topField.growth) +
         "); " + bottomField.name + " is lowest with " + fmt.signedMoney(bottomField.gain) +
-        " (" + fmt.pct(bottomField.growth) + ").");
+        " (" + fmt.pct(bottomField.growth) + "). Full values are in the data table that follows.");
     }
 
     function renderStem() {
@@ -273,7 +345,7 @@
       [0, 1000, 2000, 3000, 4000, 5000].forEach(function (tick) {
         var y = top + plotH - (tick / max) * plotH;
         line(svg, left, y, W - right, y, tick === 0 ? "axis-line" : "grid-line");
-        text(svg, left - 8, y + 4, fmt.int(tick), "axis-label", "end");
+        text(svg, left - 8, y + 4, compact ? tickText(tick) : fmt.int(tick), "axis-label", "end");
       });
 
       var groupW = plotW / 2;
@@ -287,7 +359,7 @@
         var h1 = (row.first / max) * plotH;
         var h2 = (row.current / max) * plotH;
 
-        rect(svg, x1, top + plotH - h1, barW, h1, "bar bar--neutral",
+        rect(svg, x1, top + plotH - h1, barW, h1, "bar bar--ghost",
           row.name + " first job: " + fmt.money(row.first));
         rect(svg, x2, top + plotH - h2, barW, h2, "bar bar--accent",
           row.name + " current job: " + fmt.money(row.current));
@@ -305,7 +377,8 @@
       host.setAttribute("aria-label",
         "Grouped column chart. STEM first job " + fmt.money(G.stem[0].first) +
         " to current job " + fmt.money(G.stem[0].current) + "; Non-STEM " +
-        fmt.money(G.stem[1].first) + " to " + fmt.money(G.stem[1].current) + ".");
+        fmt.money(G.stem[1].first) + " to " + fmt.money(G.stem[1].current) +
+        ". Full values are in the data table that follows.");
     }
 
     function renderEducation() {
@@ -326,11 +399,12 @@
       var svg = makeSvg(host, W, H);
 
       var ticks = W < 420 ? [0, 3000, 6000] : [0, 2000, 4000, 6000];
+      if (W < 300) { ticks = [0, 6000]; }
 
       ticks.forEach(function (tick, index) {
         var x = plotX + (tick / max) * plotW;
         line(svg, x, 22, x, H - bottom, index === 0 ? "axis-line" : "grid-line");
-        text(svg, x, 12, fmt.int(tick), "axis-label",
+        text(svg, x, 12, W < 420 ? tickText(tick) : fmt.int(tick), "axis-label",
           index === 0 ? "start" : index === ticks.length - 1 ? "end" : "middle");
       });
 
@@ -352,7 +426,8 @@
       host.setAttribute("aria-label",
         "Bar chart of mean current salary by highest qualification. " +
         "Master's and professional holders lead at " + fmt.money(G.education[2].mean) +
-        "; PhD holders average " + fmt.money(G.education[3].mean) + ".");
+        "; PhD holders average " + fmt.money(G.education[3].mean) +
+        ". Full values are in the data table that follows.");
     }
 
     function renderCohort() {
@@ -372,13 +447,14 @@
       var xMin = 2000;
       var xMax = 6000;
       var ticks = compact ? [2000, 4000, 6000] : [2000, 3000, 4000, 5000, 6000];
+      if (W < 300) { ticks = [2000, 6000]; }
       var svg = makeSvg(host, W, H);
       var rows = G.fields.slice().sort(function (a, b) { return b.premium - a.premium; });
 
       ticks.forEach(function (tick, index) {
         var x = plotX + ((tick - xMin) / (xMax - xMin)) * plotW;
         line(svg, x, 18, x, H - 8, index === 0 ? "axis-line" : "grid-line");
-        text(svg, x, 12, fmt.int(tick), "axis-label",
+        text(svg, x, 12, compact ? tickText(tick) : fmt.int(tick), "axis-label",
           index === 0 ? "start" : index === ticks.length - 1 ? "end" : "middle");
       });
 
@@ -410,7 +486,8 @@
       host.setAttribute("aria-label",
         "Dumbbell chart of current salary by cohort and field. The ~2010 cohort premium is largest in " +
         topRow.name + " at " + fmt.signedMoney(topRow.premium) + " and smallest in " +
-        bottomRow.name + " at " + fmt.signedMoney(bottomRow.premium) + ".");
+        bottomRow.name + " at " + fmt.signedMoney(bottomRow.premium) +
+        ". Full values are in the data table that follows.");
     }
 
     function renderAll() {
@@ -427,6 +504,7 @@
     });
 
     renderAll();
+    renderDataTables();
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(renderAll);
     }
