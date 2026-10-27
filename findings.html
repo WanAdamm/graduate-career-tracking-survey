@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f4f1">
+  <title>Detailed findings · Graduate Career Tracking Survey</title>
+  <meta name="description" content="The full field ranking, discipline explorer, cohort and education tables, and the cleaning rules behind the 2,112 paired graduate salary responses.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="wordmark" href="index.html" aria-label="Graduate Career Tracking Survey — summary">
+        <span class="wordmark-full">Graduate Career Tracking Survey</span>
+        <span class="wordmark-short">GCTS</span>
+      </a>
+      <nav class="topnav" aria-label="Report">
+        <a href="index.html">Summary</a>
+        <a href="findings.html" aria-current="page">
+          <span class="nav-long">Detailed findings</span>
+          <span class="nav-short">Findings</span>
+        </a>
+        <span class="topbar-date">October 2026</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="canvas" id="main" tabindex="-1">
+    <div class="page-head">
+      <div>
+        <h1>Detailed findings</h1>
+        <p class="lead">The full ranking, field explorer, cohort and education tables, and the cleaning rules behind the 2,112 paired responses.</p>
+        <p class="meta">10 ranked fields <span aria-hidden="true">·</span> n = 2,112 <span aria-hidden="true">·</span> October 2026</p>
+      </div>
+      <a class="button button-outline" href="index.html"><span aria-hidden="true">←</span> Back to summary</a>
+    </div>
+
+    <section class="section" aria-labelledby="ranking-title">
+      <div class="section-head">
+        <div>
+          <h2 id="ranking-title">The full ranking</h2>
+          <p>Paired respondents with both salaries, after removing salary inversions and General Programmes.</p>
+        </div>
+        <p class="section-meta"><span id="sort-status" aria-live="polite">Sorted by mean gain</span> <span aria-hidden="true">·</span> n = 2,112</p>
+      </div>
+
+      <p class="table-hint">Scroll sideways to see all columns.</p>
+      <div class="table-wrap" role="region" aria-label="Full ranking table, scrolls horizontally" tabindex="0">
+        <table class="ledger-table" id="ranking-table">
+          <caption class="visually-hidden">Mean first and current salary, mean gain, mean growth and median gain by field of study.</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-key="name"><button class="sort-btn" type="button" data-key="name">Field</button></th>
+              <th scope="col" class="num" data-key="n"><button class="sort-btn" type="button" data-key="n">n</button></th>
+              <th scope="col" class="num" data-key="first"><button class="sort-btn" type="button" data-key="first">First job</button></th>
+              <th scope="col" class="num" data-key="current"><button class="sort-btn" type="button" data-key="current">Current job</button></th>
+              <th scope="col" class="num" data-key="gain"><button class="sort-btn" type="button" data-key="gain">Mean gain</button></th>
+              <th scope="col" class="num" data-key="growth"><button class="sort-btn" type="button" data-key="growth">Mean growth</button></th>
+              <th scope="col" class="num" data-key="median"><button class="sort-btn" type="button" data-key="median">Median gain</button></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">Means are shown in whole ringgit. Gain is current minus first before rounding; component means can differ from the displayed gain by RM 1.</p>
+      <p class="note">General Programmes is excluded from ranked comparisons; it has 4 cleaned paired records.</p>
+    </section>
+
+    <section class="section" aria-labelledby="explorer-title">
+      <div class="panel explorer">
+        <div class="panel-head">
+          <div>
+            <h2 id="explorer-title">Discipline explorer</h2>
+            <p>All ten ranked fields, with median gain and cohort context.</p>
+          </div>
+          <span class="unit">n = 2,112</span>
+        </div>
+        <div class="explorer-body">
+          <div class="explorer-list" id="explorer-list" role="group" aria-label="Choose a field"></div>
+          <div class="explorer-detail" id="explorer-detail" aria-live="polite">
+            <div class="explorer-top">
+              <div>
+                <h3>ICT</h3>
+                <p class="meta">Rank 1 of 10 <span aria-hidden="true">·</span> n = 167</p>
+              </div>
+              <p class="explorer-premium">~2010 premium <strong>+RM 1,930</strong></p>
+            </div>
+            <div class="money-pair">
+              <div class="money-block">
+                <span class="label">First job</span>
+                <span class="figure"><span class="currency">RM</span>1,925</span>
+              </div>
+              <div class="money-block">
+                <span class="label">Current job</span>
+                <span class="figure"><span class="currency">RM</span>4,584</span>
+              </div>
+            </div>
+            <div class="explorer-gain">
+              <span class="label">Mean gain</span>
+              <span class="gain-figure">+RM 2,659</span>
+              <span class="gain-pct">+167.6%</span>
+            </div>
+            <div class="mini-track" aria-hidden="true"></div>
+            <dl class="explorer-stats">
+              <div><dt>Median gain</dt><dd>+RM 1,750</dd></div>
+              <div><dt>~2010 current</dt><dd>RM 5,375</dd></div>
+              <div><dt>~2018 current</dt><dd>RM 3,445</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="cohort-title">
+      <div class="section-head">
+        <div>
+          <h2 id="cohort-title">The cohort gap</h2>
+          <p>Current-job means for all valid responses; gains use the cleaned paired sample.</p>
+        </div>
+        <p class="section-meta">Sorted by cohort premium</p>
+      </div>
+      <p class="table-hint">Scroll sideways to see all columns.</p>
+      <div class="table-wrap" role="region" aria-label="Cohort table, scrolls horizontally" tabindex="0">
+        <table class="ledger-table" id="cohort-table">
+          <caption class="visually-hidden">Current salary and wage gain by cohort and field, with the cohort premium.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Field</th>
+              <th scope="col" class="num">~2010 current</th>
+              <th scope="col" class="num">~2018 current</th>
+              <th scope="col" class="num">~2010 gain</th>
+              <th scope="col" class="num">~2018 gain</th>
+              <th scope="col" class="num">Premium</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">Premium is the ~2010 mean current salary minus the ~2018 mean, computed before rounding; displayed current salaries are rounded, so the columns can differ by RM 1. It mixes experience, age and period effects; it is not a causal return to experience.</p>
+    </section>
+
+    <section class="section" aria-labelledby="education-title">
+      <div class="section-head">
+        <div>
+          <h2 id="education-title">Education and current pay</h2>
+          <p>All valid current-salary responses, not the paired progression sample.</p>
+        </div>
+        <p class="section-meta">n = 4,800</p>
+      </div>
+      <p class="table-hint">Scroll sideways to see all columns.</p>
+      <div class="table-wrap" role="region" aria-label="Education table, scrolls horizontally" tabindex="0">
+        <table class="ledger-table" id="education-table">
+          <caption class="visually-hidden">Mean and median current salary by highest qualification, with the premium over the prior tier.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Qualification</th>
+              <th scope="col" class="num">n</th>
+              <th scope="col" class="num">Mean salary</th>
+              <th scope="col" class="num">Median salary</th>
+              <th scope="col" class="num">Premium over prior tier</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">The premium is descriptive, not a causal return to a degree. Master's and professional certificate holders are compared with bachelor's, and PhD holders with master's; the comparison mixes field, sector and role.</p>
+    </section>
+
+    <section class="section" id="method" aria-labelledby="method-title">
+      <div class="section-head">
+        <div>
+          <h2 id="method-title">Method and limitations</h2>
+          <p>How the cleaned progression sample was built, and what it can and cannot say.</p>
+        </div>
+      </div>
+
+      <div class="method-layout">
+        <div class="method-copy">
+          <h3>Method</h3>
+          <p>Salary bands were converted to midpoints: current job from RM 1,250 (below RM 1,500) to RM 17,500 (above RM 15,000), and first job from RM 750 (RM 1,000 and below) to RM 12,500 (above RM 10,000).</p>
+          <p>Of 2,296 paired respondents, 180 reported a current salary below their first and were removed as reporting inconsistencies. The General Programmes category (4 cleaned pairs) was excluded from ranked comparisons, leaving 2,112 respondents across 10 fields.</p>
+          <p>Mean gain is current minus first midpoint. Mean growth is the average of individual percentage changes, not the ratio of mean salaries. Education and cohort current-salary figures use all 4,800 valid responses; first-job cross-sections use 4,467.</p>
+
+          <h3>Limitations</h3>
+          <ul>
+            <li>Salary bands are coarse and top-coded, so means are approximations. Cross-sectional first-job means are sensitive to top-coded bands; Services includes 24 above RM 10,000 responses while its median is RM 1,500.</li>
+            <li>The removed inversions may include genuine pay cuts from career changes or part-time work. The estimates describe typical upward trajectories, not every individual outcome.</li>
+            <li>General Programmes remains in the raw counts but has too few paired responses for a reliable category mean.</li>
+            <li>Cohort differences mix age, experience and period effects. They are descriptive, not causal.</li>
+          </ul>
+        </div>
+
+        <aside class="audit" aria-labelledby="audit-title">
+          <h3 id="audit-title">Salary inversions removed</h3>
+          <p>180 of 2,296 paired records (7.8%) reported a current salary below the first.</p>
+          <table class="audit-table">
+            <caption class="visually-hidden">Salary inversion exclusions by field.</caption>
+            <thead>
+              <tr><th scope="col">Field</th><th scope="col">Removed</th></tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr class="total"><td>Total</td><td>180</td></tr>
+            </tfoot>
+          </table>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="page-foot">
+      <p>Graduate Career Tracking Survey <span aria-hidden="true">·</span> October 2026</p>
+      <p>Source: <a href="KRI_GCTS_Dataset.csv">KRI_GCTS_Dataset.csv</a> <span aria-hidden="true">·</span> Analysis: <a href="EDA.ipynb">EDA.ipynb</a></p>
+    </footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    var G = window.GCTS;
+    if (!G) { return; }
+
+    var fmt = G.fmt;
+    var SVG_NS = "http://www.w3.org/2000/svg";
+
+    function node(tag, attrs) {
+      var el = document.createElementNS(SVG_NS, tag);
+      if (attrs) {
+        Object.keys(attrs).forEach(function (key) {
+          el.setAttribute(key, attrs[key]);
+        });
+      }
+      return el;
+    }
+
+    function text(svg, x, y, value, cls, anchor) {
+      var el = node("text", { x: x, y: y });
+      if (cls) { el.setAttribute("class", cls); }
+      if (anchor) { el.setAttribute("text-anchor", anchor); }
+      el.textContent = value;
+      svg.appendChild(el);
+      return el;
+    }
+
+    function line(svg, x1, y1, x2, y2, cls) {
+      svg.appendChild(node("line", {
+        x1: x1, y1: y1, x2: x2, y2: y2, "class": cls
+      }));
+    }
+
+    function circle(svg, cx, cy, r, cls, title) {
+      var el = node("circle", { cx: cx, cy: cy, r: r, "class": cls });
+      if (title) {
+        var t = node("title");
+        t.textContent = title;
+        el.appendChild(t);
+      }
+      svg.appendChild(el);
+      return el;
+    }
+
+    function makeSvg(host, width, height) {
+      host.textContent = "";
+      var svg = node("svg", {
+        viewBox: "0 0 " + width + " " + height,
+        width: width,
+        height: height,
+        "aria-hidden": "true",
+        focusable: "false"
+      });
+      host.appendChild(svg);
+      return svg;
+    }
+
+    /* Ranking table */
+
+    var rankingBody = document.querySelector("#ranking-table tbody");
+    var sortStatus = document.querySelector("#sort-status");
+    var labels = {
+      name: "field",
+      n: "sample size",
+      first: "first job",
+      current: "current job",
+      gain: "mean gain",
+      growth: "mean growth",
+      median: "median gain"
+    };
+    var sortState = { key: "gain", direction: "desc" };
+
+    function renderRanking() {
+      if (!rankingBody) { return; }
+
+      var rows = G.fields.slice().sort(function (a, b) {
+        var av = a[sortState.key];
+        var bv = b[sortState.key];
+        var cmp = sortState.key === "name" ? av.localeCompare(bv) : av - bv;
+        return sortState.direction === "asc" ? cmp : -cmp;
+      });
+
+      rankingBody.innerHTML = rows.map(function (field) {
+        return "<tr>" +
+          "<td class=\"field-cell\">" + field.name + "</td>" +
+          "<td class=\"num\">" + fmt.int(field.n) + "</td>" +
+          "<td class=\"num\">" + fmt.money(field.first) + "</td>" +
+          "<td class=\"num\">" + fmt.money(field.current) + "</td>" +
+          "<td class=\"num strong\">" + fmt.signedMoney(field.gain) + "</td>" +
+          "<td class=\"num\">" + fmt.pct(field.growth) + "</td>" +
+          "<td class=\"num\">" + fmt.signedMoney(field.median) + "</td>" +
+          "</tr>";
+      }).join("");
+
+      document.querySelectorAll("#ranking-table th[data-key]").forEach(function (th) {
+        th.removeAttribute("aria-sort");
+        if (th.getAttribute("data-key") === sortState.key) {
+          th.setAttribute("aria-sort", sortState.direction === "asc" ? "ascending" : "descending");
+        }
+      });
+
+      if (sortStatus) {
+        var order = sortState.key === "name"
+          ? (sortState.direction === "asc" ? "A to Z" : "Z to A")
+          : (sortState.direction === "asc" ? "low to high" : "high to low");
+        sortStatus.textContent = "Sorted by " + labels[sortState.key] + ", " + order;
+      }
+    }
+
+    document.querySelectorAll("#ranking-table .sort-btn").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var key = button.getAttribute("data-key");
+        if (key === sortState.key) {
+          sortState.direction = sortState.direction === "asc" ? "desc" : "asc";
+        } else {
+          sortState.key = key;
+          sortState.direction = key === "name" ? "asc" : "desc";
+        }
+        renderRanking();
+      });
+    });
+
+    renderRanking();
+
+    /* Explorer */
+
+    var explorerList = document.querySelector("#explorer-list");
+    var explorerDetail = document.querySelector("#explorer-detail");
+    var selectedIndex = 0;
+
+    function drawMiniTrack(field) {
+      if (!explorerDetail) { return; }
+      var host = explorerDetail.querySelector(".mini-track");
+      if (!host) { return; }
+
+      var W = Math.max(240, Math.floor(host.clientWidth || 0) || 520);
+      var H = 76;
+      var pad = 6;
+      var plotW = W - pad * 2;
+      var max = 5000;
+      var baseline = 36;
+      var svg = makeSvg(host, W, H);
+
+      line(svg, pad, baseline, W - pad, baseline, "axis-line");
+
+      [0, 2500, 5000].forEach(function (tick, index) {
+        var x = pad + (tick / max) * plotW;
+        line(svg, x, baseline - 4, x, baseline + 4, index === 0 ? "axis-line" : "grid-line");
+        text(svg, x, 66, fmt.int(tick), "axis-label",
+          index === 0 ? "start" : index === 2 ? "end" : "middle");
+      });
+
+      var xFirst = pad + (field.first / max) * plotW;
+      var xCurrent = pad + (field.current / max) * plotW;
+
+      circle(svg, xFirst, baseline, 4.5, "dot--neutral",
+        field.name + " first job: " + fmt.money(field.first));
+      circle(svg, xCurrent, baseline, 4.5, "dot--accent",
+        field.name + " current job: " + fmt.money(field.current));
+
+      text(svg, xFirst, 14, "First", "chart-subvalue", "middle");
+      text(svg, xCurrent, 14, "Current", "chart-subvalue", "middle");
+    }
+
+    function explorerMarkup(field) {
+      return "<div class=\"explorer-top\">" +
+        "<div><h3>" + field.name + "</h3>" +
+        "<p class=\"meta\">Rank " + field.rank + " of 10 <span aria-hidden=\"true\">·</span> n = " + fmt.int(field.n) + "</p></div>" +
+        "<p class=\"explorer-premium\">~2010 premium <strong>" + fmt.signedMoney(field.premium) + "</strong></p>" +
+        "</div>" +
+        "<div class=\"money-pair\">" +
+        "<div class=\"money-block\"><span class=\"label\">First job</span><span class=\"figure\"><span class=\"currency\">RM</span>" + fmt.int(field.first) + "</span></div>" +
+        "<div class=\"money-block\"><span class=\"label\">Current job</span><span class=\"figure\"><span class=\"currency\">RM</span>" + fmt.int(field.current) + "</span></div>" +
+        "</div>" +
+        "<div class=\"explorer-gain\"><span class=\"label\">Mean gain</span>" +
+        "<span class=\"gain-figure\">" + fmt.signedMoney(field.gain) + "</span>" +
+        "<span class=\"gain-pct\">" + fmt.pct(field.growth) + "</span></div>" +
+        "<div class=\"mini-track\" aria-hidden=\"true\"></div>" +
+        "<dl class=\"explorer-stats\">" +
+        "<div><dt>Median gain</dt><dd>" + fmt.signedMoney(field.median) + "</dd></div>" +
+        "<div><dt>~2010 current</dt><dd>" + fmt.money(field.cohort2010) + "</dd></div>" +
+        "<div><dt>~2018 current</dt><dd>" + fmt.money(field.cohort2018) + "</dd></div>" +
+        "</dl>";
+    }
+
+    function selectField(index) {
+      selectedIndex = index;
+      if (explorerDetail) {
+        explorerDetail.innerHTML = explorerMarkup(G.fields[index]);
+        drawMiniTrack(G.fields[index]);
+      }
+      if (explorerList) {
+        explorerList.querySelectorAll(".explorer-btn").forEach(function (button) {
+          button.setAttribute("aria-pressed", String(Number(button.getAttribute("data-index")) === index));
+        });
+      }
+    }
+
+    if (explorerList) {
+      explorerList.innerHTML = G.fields.map(function (field, index) {
+        return "<button class=\"explorer-btn\" type=\"button\" data-index=\"" + index + "\" aria-controls=\"explorer-detail\" aria-pressed=\"" + (index === 0) + "\">" +
+          "<span class=\"ex-rank\">" + field.rank + "</span>" +
+          "<span class=\"ex-name\">" + field.name + "</span>" +
+          "<span class=\"ex-gain\">" + fmt.signedMoney(field.gain) + "</span>" +
+          "</button>";
+      }).join("");
+
+      explorerList.addEventListener("click", function (event) {
+        var button = event.target.closest(".explorer-btn");
+        if (!button) { return; }
+        selectField(Number(button.getAttribute("data-index")));
+      });
+    }
+
+    selectField(0);
+
+    /* Cohort table */
+
+    var cohortBody = document.querySelector("#cohort-table tbody");
+    if (cohortBody) {
+      var cohortRows = G.fields.slice().sort(function (a, b) { return b.premium - a.premium; });
+      cohortBody.innerHTML = cohortRows.map(function (field) {
+        return "<tr>" +
+          "<td class=\"field-cell\">" + field.name + "</td>" +
+          "<td class=\"num\">" + fmt.money(field.cohort2010) + "</td>" +
+          "<td class=\"num\">" + fmt.money(field.cohort2018) + "</td>" +
+          "<td class=\"num\">" + fmt.signedMoney(field.cohortGain2010) + "</td>" +
+          "<td class=\"num\">" + fmt.signedMoney(field.cohortGain2018) + "</td>" +
+          "<td class=\"num strong\">" + fmt.signedMoney(field.premium) + "</td>" +
+          "</tr>";
+      }).join("");
+    }
+
+    /* Education table */
+
+    var educationBody = document.querySelector("#education-table tbody");
+    if (educationBody) {
+      educationBody.innerHTML = G.education.map(function (row) {
+        var premium = row.premiumPct == null
+          ? "<span class=\"muted\">Baseline</span>"
+          : "<span class=\"strong\">" + fmt.pct(row.premiumPct) + "</span>" +
+            "<span class=\"cell-sub\">" + fmt.signedMoney(row.premiumRm) + "</span>";
+        return "<tr>" +
+          "<td class=\"field-cell\">" + row.name + "</td>" +
+          "<td class=\"num\">" + fmt.int(row.n) + "</td>" +
+          "<td class=\"num\">" + fmt.money(row.mean) + "</td>" +
+          "<td class=\"num\">" + fmt.money(row.median) + "</td>" +
+          "<td class=\"num\">" + premium + "</td>" +
+          "</tr>";
+      }).join("");
+    }
+
+    /* Outlier audit */
+
+    var auditBody = document.querySelector(".audit-table tbody");
+    if (auditBody) {
+      auditBody.innerHTML = G.exclusions.map(function (row) {
+        var name = row.field === "General" ? "General Programmes" : row.field;
+        return "<tr><td>" + name + "</td><td>" + fmt.int(row.n) + "</td></tr>";
+      }).join("");
+    }
+
+    /* Resize and font load */
+
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        drawMiniTrack(G.fields[selectedIndex]);
+      }, 120);
+    });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        drawMiniTrack(G.fields[selectedIndex]);
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
